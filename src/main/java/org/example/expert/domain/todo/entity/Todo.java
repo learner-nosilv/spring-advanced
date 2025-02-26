@@ -23,6 +23,7 @@ public class Todo extends Timestamped {
     private String contents;
     private String weather;
 
+    // ManyToOne: 여러 Todo가 하나의 User에 연결됨 + LAZY이므로 User 데이터는 필요할 때 로딩됨
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
