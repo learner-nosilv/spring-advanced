@@ -26,6 +26,12 @@ public class AuthService {
     // 회원가입 인증 서비스
     @Transactional
     public SignupResponse signup(SignupRequest signupRequest) {
+        // 사용자가 입력한 이메일(signupRequest.getEmail())이
+        // userRepository.existsByEmail(): 이미 존재하는지 검사하여
+        // 이미 존재한다면 InvalidRequestException 예외 날리기
+        if (userRepository.existsByEmail(signupRequest.getEmail())) {
+            throw new InvalidRequestException("이미 존재하는 이메일입니다.");
+        }
 
         // 사용자가 입력한 비밀번호(signupRequest.getPassword())를
         // passwordEncoder.encode(): 암호화해서
@@ -35,13 +41,8 @@ public class AuthService {
         // 사용자가 선택한 역할을 UserRole타입(Enum)으로 변환하여 변수에 저장하기
         UserRole userRole = UserRole.of(signupRequest.getUserRole());
 
-        // 사용자가 입력한 이메일(signupRequest.getEmail())이
-        // userRepository.existsByEmail(): 이미 존재하는지 검사하여
-        // 이미 존재한다면 InvalidRequestException 예외 날리기
-        if (userRepository.existsByEmail(signupRequest.getEmail())) {
-            throw new InvalidRequestException("이미 존재하는 이메일입니다.");
-        }
-/*  [문제점]
+/*  ----- 해결완료 -----
+    [문제점]
     - 비밀번호 암호화, UserRole 설정을 하더라도
     - 사용자 이메일이 중복된다면 위의 과정이 쓸모없어짐
 
