@@ -20,7 +20,7 @@ class PasswordEncoderTest {
         String encodedPassword = passwordEncoder.encode(rawPassword);
 
         // when
-        boolean matches = passwordEncoder.matches(encodedPassword, rawPassword);
+        boolean matches = passwordEncoder.matches(rawPassword, encodedPassword);
         // passwordEncoder.matches()메서드: 첫번째 인자를 BCrypt 해싱 알고리즘을 사용하여 암호화한 후, 두번째 인자(해시값)과 비교하는 메소드
         // public boolean matches(String rawPassword, String encodedPassword)
         // [문제] 첫 번째 인자에 암호화되지 않은 패스워드, 두 번째 인자에 암호화된 패스워드를 기입헤야 함 (뒤바뀜)
