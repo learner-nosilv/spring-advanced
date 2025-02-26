@@ -27,11 +27,11 @@ public class UserService {
     @Transactional  // 메서드가 실행되는 동안 트랜젝션이 활성화되어 오류가 발생하는 경우 데이터를 롤백함
     public void changePassword(long userId, UserChangePasswordRequest userChangePasswordRequest) {
         // 새로운 비밀번호가 규격에 맞는지 확인하여 규격에 맞지않는다면 InvalidRequestException 발생
-        if (userChangePasswordRequest.getNewPassword().length() < 8 ||
-                !userChangePasswordRequest.getNewPassword().matches(".*\\d.*") ||
-                !userChangePasswordRequest.getNewPassword().matches(".*[A-Z].*")) {
-            throw new InvalidRequestException("새 비밀번호는 8자 이상이어야 하고, 숫자와 대문자를 포함해야 합니다.");
-        }
+//        if (userChangePasswordRequest.getNewPassword().length() < 8 ||
+//                !userChangePasswordRequest.getNewPassword().matches(".*\\d.*") ||
+//                !userChangePasswordRequest.getNewPassword().matches(".*[A-Z].*")) {
+//            throw new InvalidRequestException("새 비밀번호는 8자 이상이어야 하고, 숫자와 대문자를 포함해야 합니다.");
+//        }
         // [문제점] 비밀번호 유효성 검사는 DTO 만들 때 하면 되지,
         //        굳이 Controller층을 지나 비즈니스 로직을 수행하는 Service층에서 검사할 필요가 없음
         // [해결방법] DTO에서 바로 비밀번호 유효성 검사까지 진행한다
