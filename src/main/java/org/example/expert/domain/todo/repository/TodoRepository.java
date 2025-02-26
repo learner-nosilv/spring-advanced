@@ -3,6 +3,7 @@ package org.example.expert.domain.todo.repository;
 import org.example.expert.domain.todo.entity.Todo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -18,7 +19,8 @@ public interface TodoRepository extends JpaRepository<Todo, Long> {
     //  1. 1회 : 총 Todo 개수 조회(Count 쿼리) : SELECT * FROM todo ORDER BY modifiedAt DESC; = N 개
     //  2. N회 : 조회된 Todo의 실제 User 조회(FETCH JOIN) : SELECT * FROM user WHERE id = [...]; X N 회
     // [해결방안] FETCH JOIN을 사용하지 않고 @EntityGraph(attributePaths = "user") 를 사용한다
-    @Query("SELECT t FROM Todo t LEFT JOIN FETCH t.user u ORDER BY t.modifiedAt DESC")
+    @EntityGraph(attributePaths = "user")
+    @Query("SELECT t FROM Todo t ORDER BY t.modifiedAt DESC")
     Page<Todo> findAllByOrderByModifiedAtDesc(Pageable pageable);
 
     // [단건조회]
