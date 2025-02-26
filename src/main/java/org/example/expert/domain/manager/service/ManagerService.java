@@ -57,6 +57,7 @@ public class ManagerService {
 
     @Transactional(readOnly = true)
     public List<ManagerResponse> getManagers(long todoId) {
+        // todoId가 존재하는지 확인 -> 찾지 못하는 경우 IRE 예외 발생
         Todo todo = todoRepository.findById(todoId)
                 .orElseThrow(() -> new InvalidRequestException("Todo not found"));
 
